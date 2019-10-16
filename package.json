@@ -1,0 +1,19 @@
+{
+  "name": "js-tdd-course",
+  "version": "1.0.0",
+  "description": "Nossa biblioteca do curso de JS com TDD na prática",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeonardoCamargo31/js-tdd-course.git"
+  },
+  "author": "Leonardo Camargo <leonardo_camargo31@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LeonardoCamargo31/js-tdd-course/issues"
+  },
+  "homepage": "https://github.com/LeonardoCamargo31/js-tdd-course#readme"
+}
