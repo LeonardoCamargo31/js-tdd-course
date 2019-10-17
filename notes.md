@@ -13,7 +13,7 @@ npm adduser
 E por fim inicializamos
 ```
 npm init
-``` 
+```
 
 ## Gitignore
 
@@ -39,7 +39,7 @@ Uma das principais é o uso do readme, é o arquivo principal do github, onde vo
 https://github.com/lyef/lyef-react-component
 https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
 
-Para pegar as licenças: 
+Para pegar as licenças:
 https://opensource.org/licenses
 
 
@@ -58,9 +58,67 @@ Há um tempo atrás era muito usado o JsHint, que recebia essas regras, passava 
 
 Depois veio o JsLint, e depois JSCS e que começou a dar uma boa mudanças, mostrando erros de uma forma bem bacana.
 
-Então veio o ESLint, que é o mais usado atualmente.
+Então veio o ESLint, que é o mais usado atualmente. Então vamos instalar ele com o seguinte comando:
 
+```
+npm install eslint -D
+```
 
+Para inicializar o EsLint
+```
+./node_modules/.bin/eslint --init
+```
+Feito isso ele vai criar esse arquivo .eslintrc na raiz do nosso projeto. Agora se escrevermos nosso código fora do padrão ele ira exibir os erros. E se executarmos o comando abaixo, ele mostra todos os erros.
 
+```
+./node_modules/.bin/eslint src/*.js
+```
+Para garantir que nosso editor tenha a configuração exata do projeto, seja em qualquer editor, usamos o EditorConfig. Para isso instalamos a extensão EditorConfig, e na raiz do projeto clico com o botão direito, generate .editorconfig.
 
+```
+root = true // para funcionar em todos os editores
 
+[*] //todos os arquivos, poderia ser todos [*.js]
+indent_style = space //space ou tabs
+indent_size = 2
+charset = utf-8
+trim_trailing_whitespace = true //apague todos os espaços vazios
+insert_final_newline = true //inserir uma linha no final do arquivo
+```
+
+## Npm scripts
+
+Nada mais é do que um script executado diretamente pelo npm, lá no arquivo package.json:
+```
+"scripts": {
+  "teste":"echo 'heyyyy'"
+}
+```
+Ao executar `npm run teste` teremos no terminal a saida `heyyyy`
+
+Vamos criar um script pro EsLint:
+```
+"scripts": {
+  "lint":"./node_modules/.bin/eslint src/*.js"
+}
+```
+
+## Configurando o Hooks no git
+
+O husky nada mais é um script que permite criar hooks do git de forma mais simples.
+
+Hooks que na tradução seria ganchos, são scripts que rodam antes de alguma tarefa, por exemplo antes de um commit faz algo, antes de dar um push faz aquilo. E também podem ter tarefas pós.
+
+Primeira coisa precisamos instalar o husky
+```
+npm install husky --save-dev
+```
+Por exemplo antes do push, quero executar o lint, para nosso código estar no padrão. Caso tenha algum erro ele não deixa subir.
+```
+"scripts": {
+  "lint": "./node_modules/.bin/eslint src/*.js",
+  "prepush": "npm run lint",
+}
+```
+
+https://github.com/typicode/husky
