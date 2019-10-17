@@ -1,4 +1,4 @@
-## Inicalizado o NPM
+## Inicializando o NPM
 
 Init permite deicar salvo por default algumas informações importantes, como por exemplo, nome do autor, email do autor, licença usada, por exemplo:
 ```
