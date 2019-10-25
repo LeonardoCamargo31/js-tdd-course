@@ -163,3 +163,195 @@ describe('Main', () => {
   });
 });
 ```
+
+
+
+## Chai, diferenças entre should, expect e assert
+```
+it('deve ser um array', () => {
+    expect(arr).to.be.a('array');
+});
+
+it('deve ter o tamanho de 4 quando adionar um valor no array', () => {
+  arr.push(4);
+  expect(arr).to.have.lengthOf(4);
+});
+
+it('quando utilizar o método pop, nosso array deve diminuir', () => {
+  arr.pop();
+  expect(arr).to.have.lengthOf(2);
+});
+
+it('deve remover o valor 3 quando quando usar o pop no array', () => {
+  arr.pop();
+  // espero que não tenha o valor 3
+  expect(arr).to.not.have.include(3);
+});
+```
+
+## Testando calculadora simples
+
+Para usar ES6
+```
+npm i babel-preset-env babel-register
+
+e no arquivo package.json, só para especificar que é requerido o babel
+"test": "./node...ha tests/**/*.spec.js --require babel-register"
+```
+
+```
+import { expect } from 'chai';
+import { sum, sub, mult, div } from '../src/main';
+
+describe('Main', () => {
+  // smoke tests = > verifica o funcionamento básico do método
+  describe('smoke tests', () => {
+    it('deve existir o metodo `sum`', () => {
+      expect(sum).to.exist;
+      expect(sum).to.be.a('function');
+    });
+
+    it('deve existir o metodo `sub`', () => {
+      expect(sub).to.exist;
+      expect(sub).to.be.a('function');
+    });
+
+    it('deve existir o metodo `mult`', () => {
+      expect(mult).to.exist;
+      expect(mult).to.be.a('function');
+    });
+
+    it('deve existir o metodo `div`', () => {
+      expect(div).to.exist;
+      expect(div).to.be.a('function');
+    });
+  });
+
+
+  describe('Sum', () => {
+    it('deve retornar 4 quando `sum(2,2)`', () => {
+      expect(sum(2, 2)).to.be.equal(4);
+    });
+  });
+
+  describe('Sub', () => {
+    it('deve retornar 4 quando `sub(6,2)`', () => {
+      expect(sub(6, 2)).to.be.equal(4);
+    });
+
+    it('deve retornar -4 quando `sub(6,10)`', () => {
+      expect(sub(6, 10)).to.be.equal(-4);
+    });
+  });
+
+  describe('Mult', () => {
+    it('deve retornar 12 quando `mult(6,2)`', () => {
+      expect(mult(6, 2)).to.be.equal(12);
+    });
+  });
+
+  describe('Div', () => {
+    it('deve retornar 3 quando `div(6,2)`', () => {
+      expect(div(6, 2)).to.be.equal(3);
+    });
+    it('deve retornar `Não é possível divisão por zero!` quando divir por 0', () => {
+      expect(div(4, 0)).to.be.equal('Não é possível divisão por zero!');
+    });
+  });
+});
+```
+
+
+## Desafio FizzBuzz
+
+- Se o número for divisível por 3, no lugar do número escreva 'Fizz' - X
+- Se o número for divisível por 5, no lugar do número escreva 'Buzz' -  - Se o número for divisível por 3 e 5, no lugar do número escreva 'FizzBuzz' - X
+- Se não for múltiplo de nada, retorna o número
+
+main.js
+```
+const FizzBuzz = (num) => {
+  if (num % 3 === 0 && num % 5 === 0) return 'FizzBuzz';
+  if (num % 3 === 0) return 'Fizz';
+  if (num % 5 === 0) return 'Buzz';
+  return num;
+};
+export default FizzBuzz;
+```
+main.spec.js
+```
+import FizzBuzz from '../src/main';
+
+describe('FizzBuzz', () => {
+  it('deve retornar `Fizz` quando for multiplo de 3', () => {
+    expect(FizzBuzz(3)).to.be.equal('Fizz');
+    expect(FizzBuzz(6)).to.be.equal('Fizz');
+  });
+  it('deve retornar `Buzz` quando for multiplo de 5', () => {
+    expect(FizzBuzz(5)).to.be.equal('Buzz');
+    expect(FizzBuzz(10)).to.be.equal('Buzz');
+  });
+
+  it('deve retornar `FizzBuzz` quando for multiplo de 3 e 5', () => {
+    expect(FizzBuzz(15)).to.be.equal('FizzBuzz');
+  });
+
+  it('deve retornar um numero quando não ser multiplo de nada', () => {
+    expect(FizzBuzz(7)).to.be.equal(7);
+  });
+});
+```
+
+## Code coverage/Cobertura de código
+
+Serve para analisar todos os pedaços do seu código, que seu teste analisou, consegue analisar se alguma parte do seu código não foi testada, na realidade nem todo seu código precisa estar 100% testado, tem partes que são desnecessárias
+
+
+Vamos istalar o nyc para fazer o code coverage, nyc nada mais é que um handler do **Istambul**, todo code covarage praticamente é pelo  **Istambul**, e o nyc só ajuda a dar uns detalhes a mais
+```
+npm i -D nyc
+
+E no arquivo package.json, criamos o script
+
+"test:coverage":"nyc npm test"
+```
+E tera uma tabela, como essa:
+- statements/afirmações: que são as linhas que estamos testando
+- branches: se você tem um if/else, se ele esta pegando o if
+- funcs: que são as funções
+- lines: se esta cobrindo todas as linhas
+
+<img src="https://user-images.githubusercontent.com/15708284/58654406-a8e48a80-82cc-11e9-8ec1-d519172f4187.png"/>
+
+E ele cria uma pasta coverage, mas vamos configurar, lá no package.json para mostrar mais informações
+```
+"nyc":{
+  "reporter":["text","html"],
+  "exclude":["tests/**"]
+},
+```
+Agora lá no coverage, temos muitas informações, até quantas vezes cada linha foi executada
+```
+1x  const FizzBuzz = (num) => {
+6x    if (num % 3 === 0 && num % 5 === 0) return 'FizzBuzz';
+5x    if (num % 3 === 0) return 'Fizz';
+3x    if (num % 5 === 0) return 'Buzz';
+1x    return num;
+    };
+    export default FizzBuzz;
+```
+## Check covarege antes de cada push
+
+Podemos determinar um valor minimo de conbertura de testes, não vai deixar dar push caso não esteja com 80% de linhas e funções testadas
+```
+"nyc":{
+  ...
+  "check-coverage":true,
+  "funcions": 80,
+  "lines":80
+},
+
+e no script
+"test:coverage":"nyc npm test"
+"prepush": "npm run lint && npm run test:coverage",
+```

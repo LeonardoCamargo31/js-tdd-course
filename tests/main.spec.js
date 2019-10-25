@@ -1,36 +1,21 @@
-describe('Main', () => {
-  let arr;
-  // roda uma vez antes do bloco
-  before(() => {
+import { expect } from 'chai';
+import FizzBuzz from '../src/main';
 
+describe('FizzBuzz', () => {
+  it('deve retornar `Fizz` quando for multiplo de 3', () => {
+    expect(FizzBuzz(3)).to.be.equal('Fizz');
+    expect(FizzBuzz(6)).to.be.equal('Fizz');
   });
-  // roda uma vez depois do bloco
-  after(() => {
-
-  });
-
-  // ele roda todas as vezes antes de CADA bloco
-  beforeEach(() => {
-    arr = [1, 2, 3];
+  it('deve retornar `Buzz` quando for multiplo de 5', () => {
+    expect(FizzBuzz(5)).to.be.equal('Buzz');
+    expect(FizzBuzz(10)).to.be.equal('Buzz');
   });
 
-  // ele roda todas as vezes depois de CADA bloco
-  afterEach(() => {
-
+  it('deve retornar `FizzBuzz` quando for multiplo de 3 e 5', () => {
+    expect(FizzBuzz(15)).to.be.equal('FizzBuzz');
   });
 
-  it('deve ter o tamanho de 4 quando adionar um valor no array', () => {
-    arr.push(4);
-    console.log(arr.length); // 4
-  });
-
-  it('quando utilizar o método pop, nosso array deve diminuir', () => {
-    arr.pop();
-    console.log(arr.length); // 2
-  });
-
-  it('deve remover o valor 3 quando quando usar o pop no array', () => {
-    // ultimo valor do array é 3
-    console.log(arr.pop() === 3); // true
+  it('deve retornar um numero quando não ser multiplo de nada', () => {
+    expect(FizzBuzz(7)).to.be.equal(7);
   });
 });
