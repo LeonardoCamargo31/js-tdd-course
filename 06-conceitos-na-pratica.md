@@ -355,3 +355,23 @@ e no script
 "test:coverage":"nyc npm test"
 "prepush": "npm run lint && npm run test:coverage",
 ```
+## Sinon, uso de spy, stubs e mocks
+
+É responsavel justamente por essa parte, ele que vai ser responsavel por espionar (spy), e avisar que o metodo foi chamado, avisar quais parâmetros foram passados
+
+
+### Spy
+
+Vai espionar se a função **original** foi chamada
+
+
+### Stubs
+
+Ele é como o spy, porem ele tem um comportamento pré-programado, por exemplo se for chamado o fech retorna tal coisa, não executando a função original
+
+* **sinon-chai**: como estou trabalhando com o chai
+* **node-fetch**: como estamos em ambiente de test sem usar um navegador, não temos o fetch no node, então usamos o node-fetch, que é um polyfill
+
+```
+npm i -D sinon sinon-chai node-fetch
+```
